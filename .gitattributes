@@ -2,7 +2,7 @@
 # Set default behavior to automatically normalize line endings.
 ###############################################################################
 * linguist-vendored
-*.Html linguist-vendored=false
+*.html linguist-vendored=false
 
 * text=auto
 
