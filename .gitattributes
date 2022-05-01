@@ -2,7 +2,8 @@
 # Set default behavior to automatically normalize line endings.
 ###############################################################################
 * text=auto
-*.html linguist-vendored
+* linguist-vendored
+*.cs linguist-vendored=false
 
 ###############################################################################
 # Set default behavior for command prompt diff.
