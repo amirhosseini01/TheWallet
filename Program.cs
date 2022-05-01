@@ -12,7 +12,7 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 
 builder.Services.AddDbContextFactory<TheWalletDBContext>(options =>
       options
-        .UseSqlite("Filename=TheWallet.db")
+        .UseSqlite("Data Source=TheWallet.db")
         .EnableSensitiveDataLogging());
 
 await builder.Build().RunAsync();

@@ -9,7 +9,7 @@
 
 @code {
   [Inject]
-  private IDbContextFactory<TheWalletDBContext> _dbContextFactory { get; set; } = default!;
+  private IDbContextFactory<TheWalletDBContext> _dbContextFactory { get; set; }
 
   protected override async Task OnInitializedAsync()
   {
@@ -17,21 +17,19 @@
     await db.Database.EnsureCreatedAsync();
 
     // create seed data
-    if (!db.Finances.Any())
+     if (!db.Finances.Any())
     {
       var Finances = new[]
       {
-        new Finance { Amount = 1000, CreateDate = DateTime.Now, UpdateDate = DateTime.Now },
-        new Finance { Amount = 2000, CreateDate = DateTime.Now, UpdateDate = DateTime.Now },
-        new Finance { Amount = 3000, CreateDate = DateTime.Now, UpdateDate = DateTime.Now },
-        new Finance { Amount = 4000, CreateDate = DateTime.Now, UpdateDate = DateTime.Now },
-        new Finance { Amount = 5000, CreateDate = DateTime.Now, UpdateDate = DateTime.Now },
-        new Finance { Amount = 6000, CreateDate = DateTime.Now, UpdateDate = DateTime.Now }
+        new Finance {Id = 1, Amount = 1000, CreateDate = DateTime.Now, UpdateDate = DateTime.Now, Description = "as" },
+        new Finance { Id = 2, Amount = 1000, CreateDate = DateTime.Now, UpdateDate = DateTime.Now, Description = "as" }
       };
 
       await db.Finances.AddRangeAsync(Finances);
       await db.SaveChangesAsync();
     }
+
+    await db.Finances.ToListAsync();
 
     await base.OnInitializedAsync();
   }

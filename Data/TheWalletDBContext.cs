@@ -9,5 +9,5 @@ public class TheWalletDBContext : DbContext
     {
     }
 
-    public DbSet<Finance> Finances { get; set; } = default!;
+    public DbSet<Finance> Finances { get; set; }
 }
