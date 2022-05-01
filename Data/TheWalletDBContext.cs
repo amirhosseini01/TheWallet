@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using TheWallet.Models;
 
-namespace TheWallet.Context;
+namespace TheWallet.Data;
 
 public class TheWalletDBContext : DbContext
 {
@@ -9,5 +9,5 @@ public class TheWalletDBContext : DbContext
     {
     }
 
-    public DbSet<Finance> Cars { get; set; } = default!;
+    public DbSet<Finance> Finances { get; set; } = default!;
 }
