@@ -14,7 +14,7 @@
         </tr>
     </thead>
     <tbody>
-        @if(FinanceList is not null && FinanceList.Any())
+        @if (FinanceList is not null && FinanceList.Any())
         {
             foreach (var item in FinanceList)
             {
@@ -39,15 +39,15 @@
 
 @code
 {
+    [Inject]
+    private HttpClient Http { get; set; }
     public List<Finance> FinanceList { get; set; }
     JsonFactory<Finance> _jsonFactory = null;
     protected override async Task OnInitializedAsync()
     {
-        if (System.IO.Directory.Exists("C:\\Users\\Amir\\Desktop\\Finances.json"))
-        {
-            _jsonFactory = new("C:\\Users\\Amir\\Desktop\\Finances.json");
-            FinanceList = await _jsonFactory.GetAllAsync();
-        }
-
+        Console.WriteLine(DateTime.Now);
+        _jsonFactory = new("Data/Finances.json");
+        FinanceList = await _jsonFactory.GetAllAsync(Http);
     }
+
 }

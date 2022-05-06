@@ -1,3 +1,4 @@
+using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 
@@ -15,13 +16,9 @@ public class JsonFactory<T>
     #region Properties
     private List<T> Entities;
     #endregion
-    public async Task<List<T>> GetAllAsync()
+    public async Task<List<T>> GetAllAsync(HttpClient http)
     {
-        StringBuilder strJson = new();
-        strJson.Append('[');
-        strJson.Append(await File.ReadAllTextAsync(_jsonFileAddress));
-        strJson.Append(']');
-        Entities = JsonSerializer.Deserialize<List<T>>(strJson.ToString());
+        Entities = await http.GetFromJsonAsync<List<T>>(_jsonFileAddress);
         return Entities;
     }
     public void Add(T entity)
