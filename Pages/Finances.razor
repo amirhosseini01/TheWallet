@@ -34,7 +34,7 @@
     JsonFactory<Finance> _jsonFactory = null;
     protected override async Task OnInitializedAsync()
     {
-        _jsonFactory = new("C:\\Users\\Amir\\Desktop\\Finances.json");
+        _jsonFactory = new("/Data/Finances.json");
         FinanceList = await _jsonFactory.GetAllAsync();
     }
 }
