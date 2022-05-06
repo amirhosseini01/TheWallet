@@ -8,17 +8,21 @@ public class JsonFactory<T>
     private readonly string _jsonFileAddress;
     public JsonFactory(string jsonFileAddress)
     {
-        _jsonFileAddress = jsonFileAddress ?? "C:\\Users\\Amir\\Desktop\\Finances.json";
+        _jsonFileAddress = jsonFileAddress;
     }
     #endregion 
 
     #region Properties
-    public List<T> Entities { get; set; }
+    private List<T> Entities;
     #endregion
-    public async Task GetAllAsync()
+    public async Task<List<T>> GetAllAsync()
     {
-        string json = await File.ReadAllTextAsync(_jsonFileAddress);
-        Entities = JsonSerializer.Deserialize<List<T>>(json);
+        StringBuilder strJson = new();
+        strJson.Append('[');
+        strJson.Append(await File.ReadAllTextAsync(_jsonFileAddress));
+        strJson.Append(']');
+        Entities = JsonSerializer.Deserialize<List<T>>(strJson.ToString());
+        return Entities;
     }
     public void Add(T entity)
     {

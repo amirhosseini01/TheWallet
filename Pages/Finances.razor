@@ -1,21 +1,40 @@
 @page "/Finances"
+@using Tools
 
 <PageTitle>Finances</PageTitle>
 
 <table class="table table-hover">
-  <thead>
-    <tr>
-      <th scope="col">Id</th>
-      <th scope="col">Type</th>
-      <th scope="col">Amount</th>
-      <th scope="col">Description</th>
-      <th scope="col">Create Date</th>
-      <th scope="col">Last Update Date</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Mark</td>
-    </tr>
-  </tbody>
+    <thead>
+        <tr>
+            <th scope="col">Type</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Description</th>
+            <th scope="col">Create Date</th>
+            <th scope="col">Last Update Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in FinanceList)
+        {
+            <tr>
+                <td>@item.Type</td>
+                <td>@item.Amount</td>
+                <td>@item.Description</td>
+                <td>@item.CreateDate</td>
+                <td>@item.UpdateDate</td>
+            </tr>
+        }
+    </tbody>
 </table>
+
+
+@code
+{
+    public List<Finance> FinanceList { get; set; }
+    JsonFactory<Finance> _jsonFactory = null;
+    protected override async Task OnInitializedAsync()
+    {
+        _jsonFactory = new("C:\\Users\\Amir\\Desktop\\Finances.json");
+        FinanceList = await _jsonFactory.GetAllAsync();
+    }
+}
