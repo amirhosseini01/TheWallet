@@ -1,5 +1,4 @@
 @page "/Finances"
-@using Tools
 
 <PageTitle>Finances</PageTitle>
 
@@ -42,12 +41,8 @@
     [Inject]
     private HttpClient Http { get; set; }
     public List<Finance> FinanceList { get; set; }
-    JsonFactory<Finance> _jsonFactory = null;
     protected override async Task OnInitializedAsync()
     {
-        Console.WriteLine(DateTime.Now);
-        _jsonFactory = new("Data/Finances.json");
-        FinanceList = await _jsonFactory.GetAllAsync(Http);
     }
 
 }
