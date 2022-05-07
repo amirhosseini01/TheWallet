@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using WebApi.Dto;
+using WebApi.Repository;
 
 namespace WebApi.Controllers;
 
@@ -6,8 +8,16 @@ namespace WebApi.Controllers;
 [Route("[controller]")]
 public class FinanceController : ControllerBase
 {
-   public FinanceController()
-   {
-       
-   }
+    private readonly IFinanceRepository _financeRepository;
+
+    public FinanceController(IFinanceRepository financeRepository)
+    {
+        _financeRepository = financeRepository;
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Post(FinanceInputDto inputDto)
+    {
+       return Ok();
+    }
 }
