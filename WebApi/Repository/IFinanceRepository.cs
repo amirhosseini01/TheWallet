@@ -1,6 +1,8 @@
+using WebApi.Models;
+
 namespace WebApi.Repository;
 
-public interface IFinanceRepository
+public interface IFinanceRepository : IGenericRepository<Finance>
 {
     
 }
