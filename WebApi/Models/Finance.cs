@@ -1,10 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 
 namespace WebApi.Models;
-public class Finance
+public class Finance : BaseModel
 {
-    [Key]
-    public int Id { get; set; }
     [Required]
     public string Type { get; set; }
     public int Amount { get; set; }
