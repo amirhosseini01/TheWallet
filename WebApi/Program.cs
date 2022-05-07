@@ -13,6 +13,10 @@ builder.Services.AddDbContext<WebApiContext>(options =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 #endregion
 
+#region Services
+builder.Services.AddScoped<IFinanceRepository, FinanceRepository>();
+#endregion
+
 // Auto Mapper Configurations
 var mapperConfig = new MapperConfiguration(mc => mc.AddProfile(new MappingProfile()));
 
@@ -22,8 +26,6 @@ builder.Services.AddSingleton(mapper);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-builder.Services.AddScoped<IFinanceRepository, FinanceRepository>();
 
 var app = builder.Build();
 
