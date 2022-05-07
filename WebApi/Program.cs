@@ -1,4 +1,6 @@
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using WebApi.AutoMapperProfile;
 using WebApi.Data;
 using WebApi.Repository;
 
@@ -10,6 +12,12 @@ builder.Services.AddDbContext<WebApiContext>(options =>
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 #endregion
+
+// Auto Mapper Configurations
+var mapperConfig = new MapperConfiguration(mc => mc.AddProfile(new MappingProfile()));
+
+IMapper mapper = mapperConfig.CreateMapper();
+builder.Services.AddSingleton(mapper);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
