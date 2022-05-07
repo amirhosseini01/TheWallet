@@ -27,6 +27,7 @@ public partial class Finance
             using Stream responseStream = await response.Content.ReadAsStreamAsync();
             Console.WriteLine("final");
             var finanlRes = await JsonSerializer.DeserializeAsync<FinanceInputDto>(responseStream);
+            Console.WriteLine(finanlRes);
             Console.WriteLine("yes");
         }
     }
