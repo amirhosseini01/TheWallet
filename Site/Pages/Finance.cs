@@ -2,7 +2,9 @@
 using System.Net.Http.Json;
 using System.Text.Json;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using Site.Dto;
+using WebApi.Dto;
 
 namespace Site.Pages;
 
@@ -10,25 +12,27 @@ public partial class Finance
 {
     [Inject]
     private HttpClient Http { get; set; }
+    [Inject]
+    private IConfiguration Configuration { get; set; }
+    [Inject]
+    private IJSRuntime JsRuntime { get; set; }
+    [Parameter]
+    public FinanceInputDto FinanceInput { get; set; }
 
-    public async Task Add()
+    protected override async Task OnInitializedAsync()
     {
-        var item = new FinanceInputDto()
-        {
-            Amount = 2000,
-            PayDate = DateTime.Now,
-            Type = "Wallet"
-        };
-        var response = await Http.PostAsJsonAsync("https://localhost:7230/Finance", item);
+        FinanceInput = new();
+    }
+    private async Task HandleValidSubmit()
+    {
+        Console.WriteLine("sending form");
+        var response = await Http.PostAsJsonAsync($"{Configuration["WebApiBaseUrl"]}/Finance", FinanceInput);
         Console.WriteLine(response.IsSuccessStatusCode);
-        Console.WriteLine(response);
         if (response.IsSuccessStatusCode)
         {
-            using Stream responseStream = await response.Content.ReadAsStreamAsync();
-            Console.WriteLine("final");
-            var finanlRes = await JsonSerializer.DeserializeAsync<FinanceInputDto>(responseStream);
-            Console.WriteLine(finanlRes);
-            Console.WriteLine("yes");
+            var result = await response.Content.ReadFromJsonAsync<ResponsePayload>();
+            await JsRuntime.InvokeVoidAsync("alert", result.Message);
+            await JsRuntime.InvokeVoidAsync("CloseModal", "financeModal");
         }
     }
 }
