@@ -28,14 +28,14 @@ public class FinanceController : ControllerBase
             return BadRequest(new ResponsePayload(false, Message.InvalidData));
         }
 
-        var finances = await _financeRepository.GetQuery().Select(x=> new FinanceListDto()
+        var finances = await _financeRepository.GetQuery().Select(x => new FinanceListDto()
         {
             Id = x.Id,
             Amount = x.Amount,
             Type = x.Type,
             PayDate = x.PayDate,
             Description = x.Description
-        }).Skip(dto.Skip).Take(dto.Take).ToListAsync();
+        }).OrderByDescending(x => x.Id).Skip(dto.Skip).Take(dto.Take).ToListAsync();
 
         return Ok(new ResponsePayload<List<FinanceListDto>>(true, Message.SuccessfulyLoaded, finances));
     }
