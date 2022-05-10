@@ -22,3 +22,12 @@ public class FinanceInputDto
     [StringLength(500)]
     public string Description { get; set; }
 }
+
+public class FinanceListDto
+{
+    public int Id { get; set; }
+    public string Type { get; set; }
+    public int Amount { get; set; }
+    public DateTime PayDate { get; set; }
+    public string Description { get; set; }
+}

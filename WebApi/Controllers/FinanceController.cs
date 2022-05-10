@@ -1,5 +1,6 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using WebApi.Dto;
 using WebApi.Helpers;
 using WebApi.Models;
@@ -18,6 +19,25 @@ public class FinanceController : ControllerBase
     {
         _financeRepository = financeRepository;
         _mapper = mapper;
+    }
+    [HttpPost]
+    public async Task<IActionResult> Finances(PaginationDto dto)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(new ResponsePayload(false, Message.InvalidData));
+        }
+
+        var finances = await _financeRepository.GetQuery().Select(x=> new FinanceListDto()
+        {
+            Id = x.Id,
+            Amount = x.Amount,
+            Type = x.Type,
+            PayDate = x.PayDate,
+            Description = x.Description
+        }).Skip(dto.Skip).Take(dto.Take).ToListAsync();
+
+        return Ok(new ResponsePayload<List<FinanceListDto>>(true, Message.SuccessfulyLoaded, finances));
     }
 
     [HttpPost]
