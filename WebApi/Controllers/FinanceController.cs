@@ -20,8 +20,8 @@ public class FinanceController : ControllerBase
         _financeRepository = financeRepository;
         _mapper = mapper;
     }
-    [HttpPost]
-    public async Task<IActionResult> Finances(PaginationDto dto)
+    [HttpPost("List")]
+    public async Task<IActionResult> List(PaginationDto dto)
     {
         if (!ModelState.IsValid)
         {

@@ -42,16 +42,18 @@ public partial class Finance
 
     private async Task FillFinances()
     {
-        var response = await Http.PostAsJsonAsync($"{Configuration["WebApiBaseUrl"]}/Finances", FinanceListFilter);
-        if (response.IsSuccessStatusCode)
+        var response = await Http.PostAsJsonAsync($"{Configuration["WebApiBaseUrl"]}/Finance/List", FinanceListFilter);
+        if (!response.IsSuccessStatusCode)
         {
-            var result = await response.Content.ReadFromJsonAsync<ResponsePayload<List<FinanceListDto>>>();
-            if(!result.Succeeded)
-            {
-                await JsRuntime.InvokeVoidAsync("alert", result.Message);
-                return;
-            }
-            FinanceList = result.Obj;
+            await JsRuntime.InvokeVoidAsync("alert", $"Could Not Getting Data! Status: {response.StatusCode}");
+            return;
         }
+        var result = await response.Content.ReadFromJsonAsync<ResponsePayload<List<FinanceListDto>>>();
+        if (!result.Succeeded)
+        {
+            await JsRuntime.InvokeVoidAsync("alert", result.Message);
+            return;
+        }
+        FinanceList = result.Obj;
     }
 }
