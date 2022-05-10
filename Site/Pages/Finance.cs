@@ -16,11 +16,17 @@ public partial class Finance
     private IConfiguration Configuration { get; set; }
     [Inject]
     private IJSRuntime JsRuntime { get; set; }
+
+    //Properties
     private FinanceInputDto FinanceInput;
+    private FinanceListFilterDto FinanceListFilter;
+    private List<FinanceListDto> FinanceList;
 
     protected override async Task OnInitializedAsync()
     {
         FinanceInput = new();
+        FinanceListFilter = new();
+        await FillFinances();
     }
     private async Task HandleValidSubmit()
     {
@@ -31,6 +37,15 @@ public partial class Finance
             await JsRuntime.InvokeVoidAsync("CloseModal", "#financeModal");
             await JsRuntime.InvokeVoidAsync("ResetForm", "#frmSubmit");
             await JsRuntime.InvokeVoidAsync("alert", result.Message);
+        }
+    }
+
+    private async Task FillFinances()
+    {
+        var response = await Http.PostAsJsonAsync($"{Configuration["WebApiBaseUrl"]}/Finances", FinanceListFilter);
+        if (response.IsSuccessStatusCode)
+        {
+            FinanceList = await response.Content.ReadFromJsonAsync<List<FinanceListDto>>();
         }
     }
 }
