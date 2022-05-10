@@ -45,7 +45,13 @@ public partial class Finance
         var response = await Http.PostAsJsonAsync($"{Configuration["WebApiBaseUrl"]}/Finances", FinanceListFilter);
         if (response.IsSuccessStatusCode)
         {
-            FinanceList = await response.Content.ReadFromJsonAsync<List<FinanceListDto>>();
+            var result = await response.Content.ReadFromJsonAsync<ResponsePayload<List<FinanceListDto>>>();
+            if(!result.Succeeded)
+            {
+                await JsRuntime.InvokeVoidAsync("alert", result.Message);
+                return;
+            }
+            FinanceList = result.Obj;
         }
     }
 }
