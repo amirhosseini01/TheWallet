@@ -18,40 +18,51 @@
                 <h5 class="modal-title" id="financeModalLabel">Modal title</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                <EditForm Model="@FinanceInput" OnValidSubmit="@HandleValidSubmit">
+            <EditForm id="frmSubmit" Model="@FinanceInput" OnValidSubmit="@HandleValidSubmit">
+                <div class="modal-body">
+
                     <div class="row">
-                        <DataAnnotationsValidator />
-                        <ValidationSummary />
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="from-group">
-                                <input type="text" @bind-value="FinanceInput.Amount" class="form-control"
-                                    placeholder="amount">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="from-group">
-                                <input type="datetime" @bind-value="FinanceInput.PayDate" class="form-control"
-                                    placeholder="PayDate">
-                            </div>
+                        <div class="col-md-10 ms-2">
+                            <DataAnnotationsValidator />
+                            <ValidationSummary />
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="from-group">
-                                <input type="text" @bind-value="FinanceInput.Type" class="form-control"
-                                    placeholder="Type">
+                                <InputNumber @bind-Value="FinanceInput.Amount" class="form-control"
+                                    placeholder="amount" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="from-group">
+                                <InputDate @bind-Value="FinanceInput.PayDate" class="form-control"
+                                    placeholder="pay date" />
                             </div>
                         </div>
                     </div>
-                </EditForm>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <input type="submit" class="btn btn-primary" value="Save changes" />
-            </div>
+                    <div class="row mt-2">
+                        <div class="col-md-6">
+                            <div class="from-group">
+                                <InputText @bind-Value="FinanceInput.Type" class="form-control" placeholder="type" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-12">
+                            <div class="from-group">
+                                <InputTextArea @bind-Value="FinanceInput.Description" class="form-control"
+                                    placeholder="description" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <input type="submit" class="btn btn-primary" value="Save changes" />
+
+                </div>
+            </EditForm>
         </div>
     </div>
 </div>

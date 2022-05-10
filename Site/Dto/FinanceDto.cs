@@ -14,10 +14,12 @@ public class FinanceInputDto
     [StringLength(maximumLength: 250, MinimumLength = 1)]
     public string Type { get; set; }
 
+    [Required]
     [Range(int.MinValue, int.MaxValue)]
-    public int Amount { get; set; }
+    public int? Amount { get; set; }
 
-    public DateTime PayDate { get; set; }
+    [Required]
+    public DateTime? PayDate { get; set; }
 
     [StringLength(500)]
     public string Description { get; set; }
