@@ -20,7 +20,7 @@ public partial class Finance
     //Properties
     private FinanceInputDto FinanceInput;
     private FinanceListFilterDto FinanceListFilter;
-    private List<FinanceListDto> FinanceList;
+    private FinancePaginationDto FinanceList;
 
     protected override async Task OnInitializedAsync()
     {
@@ -31,13 +31,22 @@ public partial class Finance
     private async Task HandleValidSubmit()
     {
         var response = await Http.PostAsJsonAsync($"{Configuration["WebApiBaseUrl"]}/Finance", FinanceInput);
-        if (response.IsSuccessStatusCode)
+        if (!response.IsSuccessStatusCode)
         {
-            var result = await response.Content.ReadFromJsonAsync<ResponsePayload>();
-            await JsRuntime.InvokeVoidAsync("CloseModal", "#financeModal");
-            await JsRuntime.InvokeVoidAsync("ResetForm", "#frmSubmit");
-            await JsRuntime.InvokeVoidAsync("alert", result.Message);
+            await JsRuntime.InvokeVoidAsync("alert", $"Could Not Getting Data! Status: {response.StatusCode}");
+            return;
         }
+        var result = await response.Content.ReadFromJsonAsync<ResponsePayload>();
+        if(!result.Succeeded)
+        {
+            await JsRuntime.InvokeVoidAsync("alert", result.Message);
+            return;
+        }
+        await JsRuntime.InvokeVoidAsync("CloseModal", "#financeModal");
+        await JsRuntime.InvokeVoidAsync("ResetForm", "#frmSubmit");
+        FinanceListFilter = new();
+        await FillFinances();
+        StateHasChanged();
     }
 
     private async Task FillFinances()
@@ -48,12 +57,27 @@ public partial class Finance
             await JsRuntime.InvokeVoidAsync("alert", $"Could Not Getting Data! Status: {response.StatusCode}");
             return;
         }
-        var result = await response.Content.ReadFromJsonAsync<ResponsePayload<List<FinanceListDto>>>();
+        var result = await response.Content.ReadFromJsonAsync<ResponsePayload<FinancePaginationDto>>();
         if (!result.Succeeded)
         {
             await JsRuntime.InvokeVoidAsync("alert", result.Message);
             return;
         }
-        FinanceList = result.Obj;
+        FinanceList = new()
+        {
+            PageIndex = result.Obj.PageIndex,
+            TotalPages = result.Obj.TotalPages,
+            List = result.Obj.List
+        };
+    }
+
+    private async Task ChangePagination(int pageId)
+    {
+        FinanceListFilter = new()
+        {
+            Skip = pageId
+        };
+        await FillFinances();
+        StateHasChanged();
     }
 }

@@ -24,9 +24,9 @@
       </tr>
   </thead>
   <tbody>
-      @if(FinanceList?.Count > 0)
+      @if(FinanceList?.List.Count > 0)
       {
-        foreach (var item in FinanceList)
+        foreach (var item in FinanceList.List)
         {
             <tr scope="row">
                 <td>@item.Id</td>
@@ -45,8 +45,27 @@
       }
   </tbody>
 </table>
+@if(FinanceList is not null)
+{
+<nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-start">
+    <li class="page-item @(FinanceList.PageIndex == 1 ? "disabled" : "" )">
+      <button class="page-link" @onclick="@(()=> ChangePagination(FinanceList.PageIndex -1))">Previous</button>
+    </li>
+    @for (int i = 1; i <= FinanceList.TotalPages; i++)
+    {
+        int buttonNumber = i;
+        <li class="page-item @(FinanceList.PageIndex == i? "active": "")">
+            <button class="page-link @i" @onclick="@(()=> ChangePagination(buttonNumber))">@i</button>
+        </li>
+    }
+    <li class="page-item @(FinanceList.PageIndex == FinanceList.TotalPages ? "disabled" : "" )">
+      <button type="button" class="page-link" @onclick="@(()=> ChangePagination(FinanceList.PageIndex + 1))">Next</button>
+    </li>
+  </ul>
+</nav>
+}
 </div>
-
 
 <!-- Modal -->
 <div class="modal fade" id="financeModal" tabindex="-1" aria-labelledby="financeModalLabel" aria-hidden="true">

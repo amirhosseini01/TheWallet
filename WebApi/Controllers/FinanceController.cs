@@ -28,16 +28,22 @@ public class FinanceController : ControllerBase
             return BadRequest(new ResponsePayload(false, Message.InvalidData));
         }
 
-        var finances = await _financeRepository.GetQuery().Select(x => new FinanceListDto()
+        int count = await _financeRepository.GetQuery().CountAsync();
+        FinancePaginationDto result = new()
         {
-            Id = x.Id,
-            Amount = x.Amount,
-            Type = x.Type,
-            PayDate = x.PayDate,
-            Description = x.Description
-        }).OrderByDescending(x => x.Id).Skip(dto.Skip).Take(dto.Take).ToListAsync();
+            PageIndex = dto.Skip,
+            TotalPages = (int)Math.Ceiling(count / (double)dto.Take),
+            List = await _financeRepository.GetQuery().Select(x => new FinanceListDto()
+            {
+                Id = x.Id,
+                Amount = x.Amount,
+                Type = x.Type,
+                PayDate = x.PayDate,
+                Description = x.Description
+            }).OrderByDescending(x => x.Id).Skip((dto.Skip - 1) * dto.Take).Take(dto.Take).ToListAsync()
+        };
 
-        return Ok(new ResponsePayload<List<FinanceListDto>>(true, Message.SuccessfulyLoaded, finances));
+        return Ok(new ResponsePayload<FinancePaginationDto>(true, Message.SuccessfulyLoaded, result));
     }
 
     [HttpPost]

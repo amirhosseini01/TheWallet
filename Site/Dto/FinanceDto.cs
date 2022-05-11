@@ -25,6 +25,12 @@ public class FinanceInputDto
     public string Description { get; set; }
 }
 
+public class FinancePaginationDto
+{
+    public int PageIndex { get; set; }
+    public int TotalPages { get; set; }
+    public List<FinanceListDto> List { get; set; }
+}
 public class FinanceListDto
 {
     public int Id { get; set; }
@@ -35,6 +41,6 @@ public class FinanceListDto
 }
 public class FinanceListFilterDto
 {
-    public int Skip { get; set; } = 0;
+    public int Skip { get; set; } = 1;
     public int Take { get; set; } = 10;
 }
