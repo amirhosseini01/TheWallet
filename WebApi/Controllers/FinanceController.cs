@@ -21,11 +21,11 @@ public class FinanceController : ControllerBase
         _mapper = mapper;
     }
     [HttpPost("List")]
-    public async Task<IActionResult> List(PaginationDto dto)
+    public async Task<ResponsePayload<FinancePaginationDto>> List(PaginationDto dto)
     {
         if (!ModelState.IsValid)
         {
-            return BadRequest(new ResponsePayload(false, Message.InvalidData));
+            return new ResponsePayload<FinancePaginationDto>(false, Message.InvalidData, null);
         }
 
         int count = await _financeRepository.GetQuery().CountAsync();
@@ -43,15 +43,15 @@ public class FinanceController : ControllerBase
             }).OrderByDescending(x => x.Id).Skip((dto.Skip - 1) * dto.Take).Take(dto.Take).ToListAsync()
         };
 
-        return Ok(new ResponsePayload<FinancePaginationDto>(true, Message.SuccessfulyLoaded, result));
+        return new ResponsePayload<FinancePaginationDto>(true, Message.SuccessfulyLoaded, result);
     }
 
     [HttpPost]
-    public async Task<IActionResult> Post(FinanceInputDto inputDto)
+    public async Task<ResponsePayload> Post(FinanceInputDto inputDto)
     {
         if (!ModelState.IsValid)
         {
-            return BadRequest(new ResponsePayload(false, Message.InvalidData));
+            return new ResponsePayload(false, Message.InvalidData);
         }
 
         var entity = _mapper.Map<Finance>(inputDto);
@@ -64,9 +64,9 @@ public class FinanceController : ControllerBase
 
         if (!res.Succeeded)
         {
-            return BadRequest(res);
+            return res;
         }
 
-        return Ok(res);
+        return res;
     }
 }
