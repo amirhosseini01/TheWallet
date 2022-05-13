@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "1Kap9GthsgI5/4d/9KpD7QTEkfjHjJ6p/0IgfkOwHHMYwS7HoBp+lPXDtnpIvb43bpc6uRrKzmipRPZbdwpEUw==",
+  "dgSpecHash": "+0Glzu8Uygorvd5acwjKQJIuNuLiNif5ALFOiPhxUFKNmnjw2AcopDZW4Tx5y3myJcpKNuCvZeAwZ7Ma5byA/g==",
   "success": true,
-  "projectFilePath": "D:\\project\\TheWallet\\Site\\Site.csproj",
+  "projectFilePath": "D:\\project\\TheWallet\\TheWallet\\Site\\Site.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Amir\\.nuget\\packages\\microsoft.aspnetcore.authorization\\6.0.2\\microsoft.aspnetcore.authorization.6.0.2.nupkg.sha512",
     "C:\\Users\\Amir\\.nuget\\packages\\microsoft.aspnetcore.components\\6.0.2\\microsoft.aspnetcore.components.6.0.2.nupkg.sha512",

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\project\\TheWallet\\Site\\Site.csproj": {}
+    "D:\\project\\TheWallet\\TheWallet\\Site\\Site.csproj": {}
   },
   "projects": {
-    "D:\\project\\TheWallet\\Site\\Site.csproj": {
+    "D:\\project\\TheWallet\\TheWallet\\Site\\Site.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\project\\TheWallet\\Site\\Site.csproj",
+        "projectUniqueName": "D:\\project\\TheWallet\\TheWallet\\Site\\Site.csproj",
         "projectName": "Site",
-        "projectPath": "D:\\project\\TheWallet\\Site\\Site.csproj",
+        "projectPath": "D:\\project\\TheWallet\\TheWallet\\Site\\Site.csproj",
         "packagesPath": "C:\\Users\\Amir\\.nuget\\packages\\",
-        "outputPath": "D:\\project\\TheWallet\\Site\\obj\\",
+        "outputPath": "D:\\project\\TheWallet\\TheWallet\\Site\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Amir\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -65,7 +65,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.102\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.300\\RuntimeIdentifierGraph.json"
         }
       },
       "runtimes": {
