@@ -25,12 +25,12 @@ builder.Services.AddSingleton(mapper);
 
 builder.Services.AddCors(options =>
 {
- options.AddPolicy("CorsPolicy",
-                builder => builder
-                    .AllowAnyMethod()
-                    .AllowCredentials()
-                    .SetIsOriginAllowed((_) => true)
-                    .AllowAnyHeader());
+    options.AddPolicy("CorsPolicy",
+                   builder => builder
+                       .AllowAnyMethod()
+                       .AllowCredentials()
+                       .SetIsOriginAllowed((_) => true)
+                       .AllowAnyHeader());
 });
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -45,6 +45,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
 
 app.UseCors("CorsPolicy");
 
