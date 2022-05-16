@@ -34,7 +34,7 @@ public partial class Finance
             return;
         }
         var result = await response.Content.ReadFromJsonAsync<ResponsePayload>();
-        if(!result.Succeeded)
+        if (!result.Succeeded)
         {
             await JsRuntime.InvokeVoidAsync("alert", result.Message);
             return;
@@ -49,6 +49,7 @@ public partial class Finance
     private async Task FillFinances()
     {
         var response = await Http.PostAsJsonAsync($"{Configuration["WebApiBaseUrl"]}/Finance/List", FinanceListFilter);
+
         if (!response.IsSuccessStatusCode)
         {
             await JsRuntime.InvokeVoidAsync("alert", $"Could Not Getting Data! Status: {response.StatusCode}");
