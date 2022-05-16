@@ -17,6 +17,9 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddScoped<IFinanceRepository, FinanceRepository>();
 #endregion
 
+builder.Services.AddControllersWithViews();
+builder.Services.AddRazorPages();
+
 // Auto Mapper Configurations
 var mapperConfig = new MapperConfiguration(mc => mc.AddProfile(new MappingProfile()));
 
@@ -56,6 +59,7 @@ app.UseCors("CorsPolicy");
 
 app.UseAuthorization();
 
+app.MapRazorPages();
 app.MapControllers();
 
 // blazor_wasm_hosting_config

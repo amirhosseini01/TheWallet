@@ -20,6 +20,11 @@ public class FinanceController : ControllerBase
         _financeRepository = financeRepository;
         _mapper = mapper;
     }
+    [HttpGet("test")]
+    public IActionResult test()
+    {
+        return Ok();
+    }
     [HttpPost("List")]
     public async Task<ResponsePayload<FinancePaginationDto>> List(PaginationDto dto)
     {
