@@ -40,16 +40,25 @@ var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
+    app.UseWebAssemblyDebugging();
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
 
+// blazor_wasm_hosting_config
+app.UseBlazorFrameworkFiles();
+app.UseStaticFiles();
+app.UseRouting();
+
 app.UseCors("CorsPolicy");
 
 app.UseAuthorization();
 
 app.MapControllers();
+
+// blazor_wasm_hosting_config
+app.MapFallbackToFile("index.html");
 
 app.Run();
