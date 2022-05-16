@@ -1,5 +1,5 @@
 using AutoMapper;
-using WebApi.Dto;
+using Shared.Dto;
 using WebApi.Models;
 
 namespace WebApi.AutoMapperProfile;

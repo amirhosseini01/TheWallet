@@ -1,10 +1,7 @@
-﻿using System.IO;
-using System.Net.Http.Json;
-using System.Text.Json;
+﻿using System.Net.Http.Json;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using Site.Dto;
-using WebApi.Dto;
+using Shared.Dto;
 
 namespace Site.Pages;
 

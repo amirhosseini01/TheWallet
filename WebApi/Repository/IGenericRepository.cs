@@ -1,4 +1,4 @@
-using WebApi.Dto;
+using Shared.Dto;
 
 namespace WebApi.Repository;
 public interface IGenericRepository<T>

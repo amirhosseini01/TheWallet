@@ -1,7 +1,7 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using WebApi.Dto;
+using Shared.Dto;
 using WebApi.Helpers;
 using WebApi.Models;
 using WebApi.Repository;

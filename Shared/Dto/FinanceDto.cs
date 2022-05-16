@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Site.Dto;
+namespace Shared.Dto;
 public class FinanceDto
 {
 

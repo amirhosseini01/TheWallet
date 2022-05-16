@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using Shared.Dto;
 using WebApi.Data;
-using WebApi.Dto;
 using WebApi.Helpers;
 using WebApi.Models;
 

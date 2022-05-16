@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace WebApi.Dto;
+namespace Shared.Dto;
 
 public class PaginationDto
 {
