@@ -61,6 +61,13 @@ public partial class Finance
         await JsRuntime.InvokeVoidAsync("ShowModal", "#financeModal");
     }
 
+    private async Task OpenModal()
+    {
+        FinanceInput = new();
+        StateHasChanged();
+        await JsRuntime.InvokeVoidAsync("ShowModal", "#financeModal");
+    }
+
     private async Task FillFinances()
     {
         var response = await Http.PostAsJsonAsync($"{Configuration["WebApiBaseUrl"]}/Finance/List", FinanceListFilter);

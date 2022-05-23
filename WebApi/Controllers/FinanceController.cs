@@ -75,10 +75,18 @@ public class FinanceController : ControllerBase
 
         var entity = _mapper.Map<Finance>(inputDto);
 
-        entity.CreateDate = DateTime.Now;
         entity.UpdateDate = DateTime.Now;
 
-        await _financeRepository.Add(entity);
+        if (entity.Id <= 0)
+        {
+            entity.CreateDate = DateTime.Now;
+            await _financeRepository.Add(entity);
+        }
+        else
+        {
+            _financeRepository.Update(entity);
+        }
+
         var res = await _financeRepository.Save();
 
         if (!res.Succeeded)
