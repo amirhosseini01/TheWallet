@@ -20,12 +20,7 @@ public class FinanceController : ControllerBase
         _financeRepository = financeRepository;
         _mapper = mapper;
     }
-    [HttpGet("test")]
-    public IActionResult test()
-    {
-        return Ok();
-    }
-    [HttpPost("List")]
+    [HttpPost]
     public async Task<ResponsePayload<FinancePaginationDto>> List(PaginationDto dto)
     {
         if (!ModelState.IsValid)
@@ -49,6 +44,25 @@ public class FinanceController : ControllerBase
         };
 
         return new ResponsePayload<FinancePaginationDto>(true, Message.SuccessfulyLoaded, result);
+    }
+
+    [HttpGet]
+    public async Task<ResponsePayload<FinanceInputDto>> Get(int id)
+    {
+        if (id <= 0)
+        {
+            return new ResponsePayload<FinanceInputDto>(false, Message.InvalidData, null);
+        }
+
+        var entity = await _financeRepository.GetById(id);
+        if (entity is null)
+        {
+            return new ResponsePayload<FinanceInputDto>(false, Message.NotFound, null);
+        }
+
+        var dto = _mapper.Map<FinanceInputDto>(entity);
+
+        return new ResponsePayload<FinanceInputDto>(true, Message.SuccessfulyLoaded, dto);
     }
 
     [HttpPost]

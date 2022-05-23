@@ -19,6 +19,11 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseModel
         await _dbSet.AddAsync(entity);
     }
 
+    public async Task<T> GetById(int id)
+    {
+        return await _dbSet.FirstOrDefaultAsync(x => x.Id == id);
+    }
+
     public IQueryable<T> GetQuery()
     {
         return _dbSet;
