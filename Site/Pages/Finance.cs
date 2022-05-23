@@ -49,19 +49,15 @@ public partial class Finance
 
     private async Task GetById(int id)
     {
-        var response = await Http.GetAsync($"{Configuration["WebApiBaseUrl"]}/Finance/{id}");
-        if (!response.IsSuccessStatusCode)
-        {
-            await JsRuntime.InvokeVoidAsync("alert", $"Could Not Getting Data! Status: {response.StatusCode}");
-            return;
-        }
-        var result = await response.Content.ReadFromJsonAsync<ResponsePayload<FinanceInputDto>>();
+        var result = await Http.GetFromJsonAsync<ResponsePayload<FinanceInputDto>>(requestUri: $"{Configuration["WebApiBaseUrl"]}/Finance/ById/{id}");
+
         if (!result.Succeeded)
         {
             await JsRuntime.InvokeVoidAsync("alert", result.Message);
             return;
         }
         FinanceInput = result.Obj;
+        StateHasChanged();
         await JsRuntime.InvokeVoidAsync("ShowModal", "#financeModal");
     }
 
