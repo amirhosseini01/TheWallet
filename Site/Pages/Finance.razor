@@ -30,8 +30,8 @@
             <tr scope="row">
                 <td>@item.Id</td>
                 <td>@item.Type</td>
-                <td>@item.Amount</td>
-                <td>@item.PayDate</td>
+                <td>@item.Amount.ToString("N0")</td>
+                <td>@item.PayDate.Date</td>
                 <td>@item.Description</td>
             </tr>
         }          

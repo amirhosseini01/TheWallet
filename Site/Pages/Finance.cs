@@ -42,6 +42,7 @@ public partial class Finance
         await JsRuntime.InvokeVoidAsync("CloseModal", "#financeModal");
         await JsRuntime.InvokeVoidAsync("ResetForm", "#frmSubmit");
         FinanceListFilter = new();
+        FinanceInput = new();
         await FillFinances();
         StateHasChanged();
     }
