@@ -32,7 +32,7 @@
                 <td>@item.Id</td>
                 <td>@item.Type</td>
                 <td>@item.Amount.ToString("N0")</td>
-                <td>@item.PayDate.Date</td>
+                <td>@item.PayDate.ToShortDateString()</td>
                 <td>@item.Description</td>
                 <td>
                     <button type="button" class="btn btn-sm btn-warning"><i class="bi bi-pencil-square"></i></button>
