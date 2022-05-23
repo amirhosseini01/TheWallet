@@ -64,6 +64,25 @@ public class FinanceController : ControllerBase
 
         return new ResponsePayload<FinanceInputDto>(true, Message.SuccessfulyLoaded, dto);
     }
+    [HttpGet("Remove/{id}")]
+    public async Task<ResponsePayload> Remove(int id)
+    {
+        if (id <= 0)
+        {
+            return new ResponsePayload(false, Message.InvalidData);
+        }
+
+        var entity = await _financeRepository.GetById(id);
+        if (entity is null)
+        {
+            return new ResponsePayload(false, Message.NotFound);
+        }
+
+        _financeRepository.Remove(entity);
+        var res = await _financeRepository.Save();
+
+        return res;
+    }
 
     [HttpPost]
     public async Task<ResponsePayload> Post(FinanceInputDto inputDto)
@@ -88,11 +107,6 @@ public class FinanceController : ControllerBase
         }
 
         var res = await _financeRepository.Save();
-
-        if (!res.Succeeded)
-        {
-            return res;
-        }
 
         return res;
     }

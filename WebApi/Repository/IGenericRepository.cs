@@ -7,5 +7,6 @@ public interface IGenericRepository<T>
     IQueryable<T> GetQuery();
     Task Add(T entity);
     void Update(T entity);
+    void Remove(T entity);
     Task<ResponsePayload> Save();
 }

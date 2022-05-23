@@ -22,6 +22,10 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseModel
     {
         _dbSet.Update(entity);
     }
+    public void Remove(T entity)
+    {
+        _dbSet.Remove(entity);
+    }
 
     public async Task<T> GetById(int id)
     {
