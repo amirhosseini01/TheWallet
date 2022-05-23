@@ -47,6 +47,24 @@ public partial class Finance
         StateHasChanged();
     }
 
+    private async Task GetById(int id)
+    {
+        var response = await Http.GetAsync($"{Configuration["WebApiBaseUrl"]}/Finance/{id}");
+        if (!response.IsSuccessStatusCode)
+        {
+            await JsRuntime.InvokeVoidAsync("alert", $"Could Not Getting Data! Status: {response.StatusCode}");
+            return;
+        }
+        var result = await response.Content.ReadFromJsonAsync<ResponsePayload<FinanceInputDto>>();
+        if (!result.Succeeded)
+        {
+            await JsRuntime.InvokeVoidAsync("alert", result.Message);
+            return;
+        }
+        FinanceInput = result.Obj;
+        await JsRuntime.InvokeVoidAsync("ShowModal", "#financeModal");
+    }
+
     private async Task FillFinances()
     {
         var response = await Http.PostAsJsonAsync($"{Configuration["WebApiBaseUrl"]}/Finance/List", FinanceListFilter);
