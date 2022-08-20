@@ -8,4 +8,5 @@ public class WebApiContext : DbContext
     {
     }
     public DbSet<Finance> Finances { get; set; }
+    public DbSet<FinanceType> FinanceTypes { get; set; }
 }
