@@ -30,7 +30,7 @@
         {
             <tr scope="row">
                 <td>@item.Id</td>
-                <td>@item.Type</td>
+                <td>@item.FinanceTypeTitle</td>
                 <td>@item.Amount.ToString("N0")</td>
                 <td>@item.PayDate.ToShortDateString()</td>
                 <td>@item.Description</td>
@@ -109,7 +109,12 @@
                     <div class="row mt-2">
                         <div class="col-md-6">
                             <div class="from-group">
-                                <InputText @bind-Value="FinanceInput.Type" class="form-control" placeholder="type" />
+                                <select @bind="FinanceInput.FinanceTypeId" class="form-control" placeholder="type">
+                                    @foreach (var item in FinanceTypeList)
+                                    {
+                                        <option value="@item.Id">@item.Title</option>
+                                    }
+                                </select>
                             </div>
                         </div>
                     </div>

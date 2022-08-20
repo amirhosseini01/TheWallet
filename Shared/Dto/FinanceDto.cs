@@ -11,8 +11,8 @@ public class FinanceInputDto
     public int? Id { get; set; }
 
     [Required]
-    [StringLength(maximumLength: 250, MinimumLength = 1)]
-    public string Type { get; set; }
+    [Range(1, int.MaxValue)]
+    public int FinanceTypeId { get; set; }
 
     [Required]
     [Range(int.MinValue, int.MaxValue)]
@@ -34,7 +34,7 @@ public class FinancePaginationDto
 public class FinanceListDto
 {
     public int Id { get; set; }
-    public string Type { get; set; }
+    public string FinanceTypeTitle { get; set; }
     public int Amount { get; set; }
     public DateTime PayDate { get; set; }
     public string Description { get; set; }

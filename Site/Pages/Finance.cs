@@ -18,12 +18,14 @@ public partial class Finance
     private FinanceInputDto FinanceInput;
     private FinanceListFilterDto FinanceListFilter;
     private FinancePaginationDto FinanceList;
+    private List<FinanceTypeListDto> FinanceTypeList;
 
     protected override async Task OnInitializedAsync()
     {
         FinanceInput = new();
         FinanceListFilter = new();
         await FillFinances();
+        await FillFinanceTypes();
     }
     private async Task HandleValidSubmit()
     {
@@ -103,6 +105,28 @@ public partial class Finance
             TotalPages = result.Obj.TotalPages,
             List = result.Obj.List
         };
+    }
+
+    private async Task FillFinanceTypes()
+    {
+        var response = await Http.PostAsJsonAsync($"{Configuration["WebApiBaseUrl"]}/FinanceType/List",
+         new PaginationDto()
+         {
+            Take = 1000
+         });
+
+        if (!response.IsSuccessStatusCode)
+        {
+            await JsRuntime.InvokeVoidAsync("alert", $"Could Not Getting Finance Types! Status: {response.StatusCode}");
+            return;
+        }
+        var result = await response.Content.ReadFromJsonAsync<ResponsePayload<List<FinanceTypeListDto>>>();
+        if (!result.Succeeded)
+        {
+            await JsRuntime.InvokeVoidAsync("alert", result.Message);
+            return;
+        }
+        FinanceTypeList = result.Obj;
     }
 
     private async Task ChangePagination(int pageId)

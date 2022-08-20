@@ -15,6 +15,7 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 #region Services
 builder.Services.AddScoped<IFinanceRepository, FinanceRepository>();
+builder.Services.AddScoped<FinanceTypeRepository>();
 #endregion
 
 builder.Services.AddControllersWithViews();

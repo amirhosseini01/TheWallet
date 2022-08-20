@@ -37,7 +37,7 @@ public class FinanceController : ControllerBase
             {
                 Id = x.Id,
                 Amount = x.Amount,
-                Type = x.Type,
+                FinanceTypeTitle = x.FinanceType.Title,
                 PayDate = x.PayDate,
                 Description = x.Description
             }).OrderByDescending(x => x.Id).Skip((dto.Skip - 1) * dto.Take).Take(dto.Take).ToListAsync()
