@@ -109,12 +109,16 @@
                     <div class="row mt-2">
                         <div class="col-md-6">
                             <div class="from-group">
-                                <select @bind="FinanceInput.FinanceTypeId" class="form-control" placeholder="type">
-                                    @foreach (var item in FinanceTypeList)
+                                <InputSelect @bind-Value="FinanceInput.FinanceTypeId" class="form-control" placeholder="type">
+                                    @if(FinanceTypeList is not null)
                                     {
-                                        <option value="@item.Id">@item.Title</option>
+                                        @foreach (var item in FinanceTypeList)
+                                        {
+                                            <option value="@item.Id">@item.Title</option>
+                                        }
                                     }
-                                </select>
+                                    
+                                </InputSelect>
                             </div>
                         </div>
                     </div>

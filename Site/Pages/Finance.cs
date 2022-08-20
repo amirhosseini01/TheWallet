@@ -24,8 +24,10 @@ public partial class Finance
     {
         FinanceInput = new();
         FinanceListFilter = new();
-        await FillFinances();
+
         await FillFinanceTypes();
+
+        await FillFinances();
     }
     private async Task HandleValidSubmit()
     {
@@ -112,7 +114,7 @@ public partial class Finance
         var response = await Http.PostAsJsonAsync($"{Configuration["WebApiBaseUrl"]}/FinanceType/List",
          new PaginationDto()
          {
-            Take = 1000
+             Take = 1000
          });
 
         if (!response.IsSuccessStatusCode)
