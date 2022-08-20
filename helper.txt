@@ -1,0 +1,4 @@
+dotnet ef migrations add {mig name}
+dotnet ef database update
+
+dotnet publish -c Release
