@@ -16,6 +16,7 @@ public partial class Finance
 
     //Properties
     private FinanceInputDto FinanceInput;
+    private FinanceTypeInputDto FinanceTypeInput;
     private FinanceApiFilterDto FinanceListFilter;
     private FinancePaginationDto FinanceList;
     private List<FinanceTypeListDto> FinanceTypeList;
@@ -23,6 +24,7 @@ public partial class Finance
     protected override async Task OnInitializedAsync()
     {
         FinanceInput = new();
+        FinanceTypeInput = new();
         FinanceListFilter = new();
 
         await FillFinanceTypes();
@@ -48,6 +50,27 @@ public partial class Finance
         FinanceListFilter = new();
         FinanceInput = new();
         await FillFinances();
+        StateHasChanged();
+    }
+
+    private async Task HandleValidSubmitFinanceType()
+    {
+        var response = await Http.PostAsJsonAsync($"{Configuration["WebApiBaseUrl"]}/FinanceType", FinanceTypeInput);
+        if (!response.IsSuccessStatusCode)
+        {
+            await JsRuntime.InvokeVoidAsync("alert", $"Could Not Getting Data! Status: {response.StatusCode}");
+            return;
+        }
+        var result = await response.Content.ReadFromJsonAsync<ResponsePayload>();
+        if (!result.Succeeded)
+        {
+            await JsRuntime.InvokeVoidAsync("alert", result.Message);
+            return;
+        }
+        await JsRuntime.InvokeVoidAsync("CloseModal", "#financeTypeModal");
+        await JsRuntime.InvokeVoidAsync("ResetForm", "#frmFinanceTypeSubmit");
+        FinanceTypeInput = new();
+        await FillFinanceTypes();
         StateHasChanged();
     }
 
@@ -84,6 +107,12 @@ public partial class Finance
         FinanceInput = new();
         StateHasChanged();
         await JsRuntime.InvokeVoidAsync("ShowModal", "#financeModal");
+    }
+    private async Task OpenFinanceTypeModal()
+    {
+        FinanceTypeInput = new();
+        StateHasChanged();
+        await JsRuntime.InvokeVoidAsync("ShowModal", "#financeTypeModal");
     }
 
     private async Task FillFinances()

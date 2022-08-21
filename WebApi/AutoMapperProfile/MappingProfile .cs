@@ -10,5 +10,9 @@ public class MappingProfile : Profile
         //Finance
         CreateMap<Finance, FinanceInputDto>();
         CreateMap<FinanceInputDto, Finance>();
+
+        //Finance Type
+        CreateMap<FinanceType, FinanceTypeInputDto>();
+        CreateMap<FinanceTypeInputDto, FinanceType>();
     }
 }

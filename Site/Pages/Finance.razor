@@ -36,6 +36,9 @@
                 <button type="button" class="btn btn-primary" @onclick="OpenModal">
                 Add New
                 </button>
+                <button type="button" class="btn btn-primary mt-2" @onclick="OpenFinanceTypeModal">
+                Add New Type
+                </button>
             </div>
             
         </div>        
@@ -109,7 +112,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="financeModalLabel">Modal title</h5>
+                <h5 class="modal-title" id="financeModalLabel">Finance Transaction</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <EditForm id="frmSubmit" Model="@FinanceInput" OnValidSubmit="@HandleValidSubmit">
@@ -156,6 +159,42 @@
                             <div class="from-group">
                                 <InputTextArea @bind-Value="FinanceInput.Description" class="form-control"
                                     placeholder="description" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <input type="submit" class="btn btn-primary" value="Save changes" />
+
+                </div>
+            </EditForm>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Finance Type -->
+<div class="modal fade" id="financeTypeModal" tabindex="-1" aria-labelledby="financeTypeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="financeTypeModalLabel">Finance Type</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <EditForm id="frmFinanceTypeSubmit" Model="@FinanceTypeInput" OnValidSubmit="@HandleValidSubmitFinanceType">
+                <div class="modal-body">
+
+                    <div class="row">
+                        <div class="col-md-10 ms-2">
+                            <DataAnnotationsValidator />
+                            <ValidationSummary />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="from-group">
+                                <InputText @bind-Value="FinanceTypeInput.Title" class="form-control"
+                                    placeholder="finance type title" />
                             </div>
                         </div>
                     </div>
