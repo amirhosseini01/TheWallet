@@ -6,28 +6,57 @@
     <div class="row">
         <h1>Finance Management</h1>
     </div>
-     <div class="d-flex justify-content-end">
-         <button type="button" class="btn btn-primary" @onclick="OpenModal">
-    Add New
-</button>
-     </div>
+    <div class="row">
+        <h6>Filters:</h6>
+    </div>
+    <EditForm id="frmFilter" Model="@FinanceListFilter" OnSubmit="@FillFinances">
+        <div class="row">
+            <div class="col-md-2">
+                <InputText @bind-Value="FinanceListFilter.SearchValue" 
+                class="form-control" placeholder="search something ..." />
+            </div>
+            <div class="col-md-2">
+                <InputNumber @bind-Value="FinanceListFilter.FromAmount" 
+                class="form-control" placeholder="from amount" />
+            </div>
+            <div class="col-md-2">
+                <InputNumber @bind-Value="FinanceListFilter.UntilAmount"
+                class="form-control" placeholder="until amount" />
+            </div>
+            <div class="col-md-2">
+                <InputDate @bind-Value="FinanceListFilter.FromDate" 
+                class="form-control" placeholder="from date" />
+            </div>
+            <div class="col-md-2">
+                <InputDate @bind-Value="FinanceListFilter.UntilDate"
+                class="form-control" placeholder="until date" />
+            </div>
+            <div class="col-md-2">
+                <input type="submit" class="btn btn-primary" value="filter" />
+                <button type="button" class="btn btn-primary" @onclick="OpenModal">
+                Add New
+                </button>
+            </div>
+            
+        </div>        
+    </EditForm>
 
-<table class="table table-hover mt-4">
-  <thead>
-      <tr>
-          <th scope="col">#</th>
-          <th scope="col">Type</th>
-          <th scope="col">Amount</th>
-          <th scope="col">Pay Date</th>
-          <th scope="col">Description</th>
-          <th scope="col">Operations</th>
-      </tr>
-  </thead>
-  <tbody>
-      @if(FinanceList?.List.Count > 0)
-      {
-        foreach (var item in FinanceList.List)
+    <table class="table table-hover mt-4">
+      <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Type</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Pay Date</th>
+            <th scope="col">Description</th>
+            <th scope="col">Operations</th>
+        </tr>
+      </thead>
+      <tbody>
+        @if(FinanceList?.List.Count > 0)
         {
+          foreach (var item in FinanceList.List)
+          {
             <tr scope="row">
                 <td>@item.Id</td>
                 <td>@item.FinanceTypeTitle</td>
@@ -43,36 +72,36 @@
                     </button>
                 </td>
             </tr>
-        }          
-      }
-      else
-      {
-          <tr>
-              <td colspan="6" class="text-center">No Item Was Founded</td>
-          </tr>
-      }
-  </tbody>
-</table>
-@if(FinanceList is not null && FinanceList.List.Count > 0)
-{
-<nav aria-label="Page navigation example">
-  <ul class="pagination justify-content-start">
-    <li class="page-item @(FinanceList.PageIndex == 1 ? "disabled" : "" )">
-      <button class="page-link" @onclick="@(()=> ChangePagination(FinanceList.PageIndex -1))">Previous</button>
-    </li>
-    @for (int i = 1; i <= FinanceList.TotalPages; i++)
+          }          
+        }
+        else
+        {
+            <tr>
+                <td colspan="6" class="text-center">No Item Was Founded</td>
+            </tr>
+        }
+      </tbody>
+    </table>
+    @if(FinanceList is not null && FinanceList.List.Count > 0)
     {
-        int buttonNumber = i;
-        <li class="page-item @(FinanceList.PageIndex == i? "active": "")">
-            <button class="page-link @i" @onclick="@(()=> ChangePagination(buttonNumber))">@i</button>
-        </li>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-start">
+                <li class="page-item @(FinanceList.PageIndex == 1 ? "disabled" : "" )">
+                  <button class="page-link" @onclick="@(()=> ChangePagination(FinanceList.PageIndex -1))">Previous</button>
+                </li>
+                @for (int i = 1; i <= FinanceList.TotalPages; i++)
+                {
+                    int buttonNumber = i;
+                    <li class="page-item @(FinanceList.PageIndex == i? "active": "")">
+                        <button class="page-link @i" @onclick="@(()=> ChangePagination(buttonNumber))">@i</button>
+                    </li>
+                }
+                <li class="page-item @(FinanceList.PageIndex == FinanceList.TotalPages ? "disabled" : "" )">
+                  <button type="button" class="page-link" @onclick="@(()=> ChangePagination(FinanceList.PageIndex + 1))">Next</button>
+                </li>
+            </ul>
+        </nav>
     }
-    <li class="page-item @(FinanceList.PageIndex == FinanceList.TotalPages ? "disabled" : "" )">
-      <button type="button" class="page-link" @onclick="@(()=> ChangePagination(FinanceList.PageIndex + 1))">Next</button>
-    </li>
-  </ul>
-</nav>
-}
 </div>
 
 <!-- Modal -->

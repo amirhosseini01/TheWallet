@@ -21,19 +21,45 @@ public class FinanceController : ControllerBase
         _mapper = mapper;
     }
     [HttpPost("List")]
-    public async Task<ResponsePayload<FinancePaginationDto>> List(PaginationDto dto)
+    public async Task<ResponsePayload<FinancePaginationDto>> List(FinanceApiFilterDto dto)
     {
         if (!ModelState.IsValid)
         {
             return new ResponsePayload<FinancePaginationDto>(false, Message.InvalidData, null);
         }
+        var query = _financeRepository.GetQuery().AsNoTracking();
 
-        int count = await _financeRepository.GetQuery().CountAsync();
+        if(dto.FromDate is not null)
+        {
+            query = query.Where(x=>x.PayDate >= dto.FromDate);
+        }
+        if(dto.UntilDate is not null)
+        {
+            query = query.Where(x=>x.PayDate <= dto.UntilDate);
+        }
+
+        if(dto.FromAmount is not null)
+        {
+            query = query.Where(x=>x.Amount >= dto.FromAmount);
+        }
+        if(dto.UntilAmount is not null)
+        {
+            query = query.Where(x=>x.Amount <= dto.UntilAmount);
+        }
+
+        if(!string.IsNullOrEmpty(dto.SearchValue))
+        {
+            query = query.Where(x=>x.Description.Contains(dto.SearchValue) ||
+            x.FinanceType.Title.Contains(dto.SearchValue) ||
+            x.Id.ToString().Contains(dto.SearchValue));
+        }
+
+        int count = await query.CountAsync();
         FinancePaginationDto result = new()
         {
             PageIndex = dto.Skip,
             TotalPages = (int)Math.Ceiling(count / (double)dto.Take),
-            List = await _financeRepository.GetQuery().Select(x => new FinanceListDto()
+            List = await query.Select(x => new FinanceListDto()
             {
                 Id = x.Id,
                 Amount = x.Amount,

@@ -39,8 +39,13 @@ public class FinanceListDto
     public DateTime PayDate { get; set; }
     public string Description { get; set; }
 }
-public class FinanceListFilterDto
+
+public class FinanceApiFilterDto : PaginationDto
 {
-    public int Skip { get; set; } = 1;
-    public int Take { get; set; } = 10;
+    public int? TypeId { get; set; }
+    public string SearchValue { get; set; }
+    public DateTime? FromDate { get; set; }
+    public DateTime? UntilDate { get; set; }
+    public int? FromAmount { get; set; }
+    public int? UntilAmount { get; set; }
 }

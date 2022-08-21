@@ -16,7 +16,7 @@ public partial class Finance
 
     //Properties
     private FinanceInputDto FinanceInput;
-    private FinanceListFilterDto FinanceListFilter;
+    private FinanceApiFilterDto FinanceListFilter;
     private FinancePaginationDto FinanceList;
     private List<FinanceTypeListDto> FinanceTypeList;
 
