@@ -43,7 +43,6 @@
             
         </div>        
     </EditForm>
-
     <table class="table table-hover mt-4">
       <thead>
         <tr>
@@ -58,6 +57,14 @@
       <tbody>
         @if(FinanceList?.List.Count > 0)
         {
+        <tr scope="row bg-light">
+            <td colspan="1">
+                <h4>Balance: </h4>
+            </td>
+            <td colspan="5">
+                <h4>@FinanceList?.List.Sum(x=>x.Amount).ToString("N0")</h4>
+            </td>
+        </tr>
           foreach (var item in FinanceList.List)
           {
             <tr scope="row">
