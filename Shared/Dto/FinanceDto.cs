@@ -29,6 +29,7 @@ public class FinancePaginationDto
 {
     public int PageIndex { get; set; }
     public int TotalPages { get; set; }
+    public long WalletBalance { get; set; }
     public List<FinanceListDto> List { get; set; }
 }
 public class FinanceListDto

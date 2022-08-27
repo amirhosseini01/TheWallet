@@ -62,7 +62,7 @@
                 <h4>Balance: </h4>
             </td>
             <td colspan="5">
-                <h4>@FinanceList?.List.Sum(x=>x.Amount).ToString("N0")</h4>
+                <h4>@FinanceList?.WalletBalance.ToString("N0")</h4>
             </td>
         </tr>
           foreach (var item in FinanceList.List)

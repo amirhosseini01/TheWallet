@@ -29,27 +29,27 @@ public class FinanceController : ControllerBase
         }
         var query = _financeRepository.GetQuery().AsNoTracking();
 
-        if(dto.FromDate is not null)
+        if (dto.FromDate is not null)
         {
-            query = query.Where(x=>x.PayDate >= dto.FromDate);
+            query = query.Where(x => x.PayDate >= dto.FromDate);
         }
-        if(dto.UntilDate is not null)
+        if (dto.UntilDate is not null)
         {
-            query = query.Where(x=>x.PayDate <= dto.UntilDate);
-        }
-
-        if(dto.FromAmount is not null)
-        {
-            query = query.Where(x=>x.Amount >= dto.FromAmount);
-        }
-        if(dto.UntilAmount is not null)
-        {
-            query = query.Where(x=>x.Amount <= dto.UntilAmount);
+            query = query.Where(x => x.PayDate <= dto.UntilDate);
         }
 
-        if(!string.IsNullOrEmpty(dto.SearchValue))
+        if (dto.FromAmount is not null)
         {
-            query = query.Where(x=>x.Description.Contains(dto.SearchValue) ||
+            query = query.Where(x => x.Amount >= dto.FromAmount);
+        }
+        if (dto.UntilAmount is not null)
+        {
+            query = query.Where(x => x.Amount <= dto.UntilAmount);
+        }
+
+        if (!string.IsNullOrEmpty(dto.SearchValue))
+        {
+            query = query.Where(x => x.Description.Contains(dto.SearchValue) ||
             x.FinanceType.Title.Contains(dto.SearchValue) ||
             x.Id.ToString().Contains(dto.SearchValue));
         }
@@ -59,6 +59,7 @@ public class FinanceController : ControllerBase
         {
             PageIndex = dto.Skip,
             TotalPages = (int)Math.Ceiling(count / (double)dto.Take),
+            WalletBalance = await _financeRepository.GetQuery().AsNoTracking().SumAsync(xx => xx.Amount),
             List = await query.Select(x => new FinanceListDto()
             {
                 Id = x.Id,
@@ -66,7 +67,7 @@ public class FinanceController : ControllerBase
                 FinanceTypeTitle = x.FinanceType.Title,
                 PayDate = x.PayDate,
                 Description = x.Description
-            }).OrderByDescending(x => x.Id).Skip((dto.Skip - 1) * dto.Take).Take(dto.Take).ToListAsync()
+            }).OrderByDescending(x => x.Id).Skip((dto.Skip - 1) * dto.Take).Take(dto.Take).ToListAsync(),
         };
 
         return new ResponsePayload<FinancePaginationDto>(true, Message.SuccessfulyLoaded, result);

@@ -134,7 +134,8 @@ public partial class Finance
         {
             PageIndex = result.Obj.PageIndex,
             TotalPages = result.Obj.TotalPages,
-            List = result.Obj.List
+            List = result.Obj.List,
+            WalletBalance = result.Obj.WalletBalance
         };
     }
 
