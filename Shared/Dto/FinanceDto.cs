@@ -7,15 +7,15 @@ public class FinanceDto
 }
 public class FinanceInputDto
 {
-    [Range(1, int.MaxValue)]
+    [Range(1, long.MaxValue)]
     public int? Id { get; set; }
 
     [Required]
-    [Range(1, int.MaxValue)]
+    [Range(1, long.MaxValue)]
     public int FinanceTypeId { get; set; }
 
     [Required]
-    [Range(int.MinValue, int.MaxValue)]
+    [Range(long.MinValue, long.MaxValue)]
     public long? Amount { get; set; }
 
     [Required]
