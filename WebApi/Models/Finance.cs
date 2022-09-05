@@ -5,7 +5,7 @@ public class Finance : BaseModel
 {
     [StringLength(250)]
     public int FinanceTypeId { get; set; }
-    public int Amount { get; set; }
+    public long Amount { get; set; }
     public DateTime PayDate { get; set; }
     [StringLength(500)]
     public string Description { get; set; }

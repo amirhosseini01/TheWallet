@@ -16,7 +16,7 @@ public class FinanceInputDto
 
     [Required]
     [Range(int.MinValue, int.MaxValue)]
-    public int? Amount { get; set; }
+    public long? Amount { get; set; }
 
     [Required]
     public DateTime? PayDate { get; set; }
@@ -36,7 +36,7 @@ public class FinanceListDto
 {
     public int Id { get; set; }
     public string FinanceTypeTitle { get; set; }
-    public int Amount { get; set; }
+    public long Amount { get; set; }
     public DateTime PayDate { get; set; }
     public string Description { get; set; }
 }
@@ -47,6 +47,6 @@ public class FinanceApiFilterDto : PaginationDto
     public string SearchValue { get; set; }
     public DateTime? FromDate { get; set; }
     public DateTime? UntilDate { get; set; }
-    public int? FromAmount { get; set; }
-    public int? UntilAmount { get; set; }
+    public long? FromAmount { get; set; }
+    public long? UntilAmount { get; set; }
 }
