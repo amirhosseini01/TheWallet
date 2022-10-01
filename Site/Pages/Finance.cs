@@ -163,10 +163,9 @@ public partial class Finance
 
     private async Task ChangePagination(int pageId)
     {
-        FinanceListFilter = new()
-        {
-            Skip = pageId
-        };
+        if (FinanceListFilter is null)
+            FinanceListFilter = new();
+        FinanceListFilter.Skip = pageId;
         await FillFinances();
         StateHasChanged();
     }
